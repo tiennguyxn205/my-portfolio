@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Đèn Kéo Quân</title>
+
+  <style>
+    body{
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:flex-start;
+      background:#111;
+      color:#fff;
+      font-family: Arial, sans-serif;
+      text-align:center;
+    }
+
+    h1{ margin:28px 0 6px; }
+    p{ margin:0 0 20px; opacity:.9; }
+
+    /* vùng nhìn 3D */
+    .scene{
+      width:320px;
+      height:320px;
+      perspective: 900px;
+      margin-top: 30px;
+    }
+
+    /* khối đèn */
+    .lamp{
+      width:100%;
+      height:100%;
+      position:relative;
+      transform-style:preserve-3d;
+      animation: spin 8s linear infinite;
+    }
+
+    /* mỗi mặt */
+    .face{
+      position:absolute;
+      width:220px;
+      height:220px;
+      left:50%;
+      top:50%;
+      transform-style:preserve-3d;
+      margin-left:-110px;
+      margin-top:-110px;
+    }
+
+    .face img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      border-radius:12px;
+      border:3px solid #fff;
+      box-shadow: 0 10px 30px rgba(0,0,0,.45);
+      cursor:pointer;
+    }
+
+    /* 6 mặt xếp vòng tròn */
+    .f1{ transform: rotateY(0deg)   translateZ(160px); }
+    .f2{ transform: rotateY(60deg)  translateZ(160px); }
+    .f3{ transform: rotateY(120deg) translateZ(160px); }
+    .f4{ transform: rotateY(180deg) translateZ(160px); }
+    .f5{ transform: rotateY(240deg) translateZ(160px); }
+    .f6{ transform: rotateY(300deg) translateZ(160px); }
+
+    @keyframes spin{
+      from{ transform: rotateY(0deg); }
+      to{ transform: rotateY(360deg); }
+    }
+
+    /* nhỏ hơn trên mobile */
+    @media (max-width: 420px){
+      .scene{ width:280px; height:280px; }
+      .face{ width:200px; height:200px; margin-left:-100px; margin-top:-100px; }
+      .f1,.f2,.f3,.f4,.f5,.f6{ transform: translateZ(140px) rotateY(var(--ry)); }
+      .f1{ --ry: 0deg; } .f2{ --ry: 60deg; } .f3{ --ry: 120deg; }
+      .f4{ --ry: 180deg; } .f5{ --ry: 240deg; } .f6{ --ry: 300deg; }
+    }
+  </style>
+</head>
+
+<body>
+  <h1>🏮 Đèn Kéo Quân</h1>
+  <p>Di chuột vào đèn để dừng — Rê chuột ra để quay tiếp</p>
+
+  <div class="scene">
+    <div class="lamp" id="lamp">
+      <div class="face f1"><img src="images/img1.jpg" alt="img1"></div>
+      <div class="face f2"><img src="images/img2.jpg" alt="img2"></div>
+      <div class="face f3"><img src="images/img3.jpg" alt="img3"></div>
+      <div class="face f4"><img src="images/img4.jpg" alt="img4"></div>
+      <div class="face f5"><img src="images/img5.jpg" alt="img5"></div>
+      <div class="face f6"><img src="images/img6.jpg" alt="img6"></div>
+    </div>
+  </div>
+
+  <script>
+    const lamp = document.getElementById("lamp");
+
+    // Hover vào đèn -> dừng
+    lamp.addEventListener("mouseenter", () => {
+      lamp.style.animationPlayState = "paused";
+    });
+
+    // Rê chuột ra -> quay tiếp
+    lamp.addEventListener("mouseleave", () => {
+      lamp.style.animationPlayState = "running";
+    });
+  </script>
+</body>
+</html>
